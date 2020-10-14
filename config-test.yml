@@ -1,1 +1,2 @@
-hello
+config
+  info: hello,world!
