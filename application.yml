@@ -1,0 +1,36 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.95.131:3306/cloud2020?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: zsq990306
+
+mybatis-plus:
+  configuration:
+    #这样的话在开发过程中发送的sql会打印出来
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰下划线转换（MP2.3之后默认开启，可不配）
+    map-underscore-to-camel-case: true
+  #扫描sql映射文件,这样自定义的sql语句就能起作用
+  mapper-locations: classpath:mapper/*.xml
+  #相当于在Spring中配置GlobalConfig和Dbconfig
+  global-config:
+    db-config:
+      id-type: auto
+
+eureka:
+  instance:
+    instance-id: payment8081
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true #是否将微服务注册进Eureka
+    fetch-registry: true #是否从EurekaServer抓取已有的注册信息,默认为true,集群必须设置为true才能配合ribbon使用
+    service-url:
+      #设置与Eureka Server交互的注册服务地址
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
